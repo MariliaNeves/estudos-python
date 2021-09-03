@@ -24,13 +24,12 @@ def alterar():
 
 @app.route('/buscar', methods=['GET',])
 def buscar():
-    lista = DB.getAllComics()
+    collection = DB.getCollection()
+    lista = DB.getAllComics(collection)
     listaRetorno = []
     for comic in lista:
-        print(comic)
         listaRetorno.append(comic)
     return str(listaRetorno)
-
 
 @app.route('/pesquisar', methods=['GET',])
 def pesquisar():
@@ -39,7 +38,6 @@ def pesquisar():
     for item in comic:
         return dumps(item)
     return "Não encontrado!"
-
 
 @app.route('/deletar', methods=['DELETE',])
 def excluir():

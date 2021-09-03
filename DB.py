@@ -10,6 +10,13 @@ def getCollection():
     collection = connection[DB_NAME][COLLECTION_NAME]
     return collection, connection
 
+def closeConnection(funcao):
+    def wrapper(*args, **kwargs):
+        connection = getCollection()
+        funcao(*args, **kwargs)
+        connection.close()
+    return wrapper
+
 def insertComic(comic):
     collection, connection = getCollection()
     collection.insert_one(comic)
@@ -26,10 +33,9 @@ def insertAllComics(comics):
     collection.insert_many(comics)
     connection.close()
 
-def getAllComics():
-    collection, connection = getCollection()
+@closeConnection
+def getAllComics(collection):
     projects = collection.find()
-    connection.close()
     return projects
 
 def createComic(value):
