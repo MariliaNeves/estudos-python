@@ -36,7 +36,8 @@ def insertAllComics(comics):
     collection.insert_many(comics)
 
 @closeConnection
-def getAllComics(collection):
+def getAllComics():
+    collection = getCollection()
     return collection.find()
 
 @closeConnection

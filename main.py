@@ -24,8 +24,7 @@ def alterar():
 
 @app.route('/buscar', methods=['GET',])
 def buscar():
-    collection = DB.getCollection()
-    lista = DB.getAllComics(collection)
+    lista = DB.getAllComics()
     listaRetorno = []
     for comic in lista:
         listaRetorno.append(comic)
