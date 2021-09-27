@@ -5,50 +5,50 @@ MONGODB_PORT = 27017
 DB_NAME = 'marvel'
 COLLECTION_NAME = 'comic'
 
+def getConnection():
+    return MongoClient(MONGODB_HOST, MONGODB_PORT)
+
 def getCollection():
-    connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
-    collection = connection[DB_NAME][COLLECTION_NAME]
-    return collection, connection
+    connection = getConnection()
+    return connection[DB_NAME][COLLECTION_NAME]
+collection = getCollection()
 
+def closeConnection(funcao):
+    def wrapper(*args, **kwargs):
+        var = funcao(*args, **kwargs)
+        getConnection().close()
+        return var
+    return wrapper
+
+@closeConnection
 def insertComic(comic):
-    collection, connection = getCollection()
     collection.insert_one(comic)
-    connection.close()
 
+@closeConnection
 def getComic(value):
-    collection, connection = getCollection()
-    comic = collection.find(value)
-    connection.close()
-    return comic
+    return collection.find(value)
 
+@closeConnection
 def insertAllComics(comics):
-    collection, connection = getCollection()
     collection.insert_many(comics)
-    connection.close()
 
+@closeConnection
 def getAllComics():
-    collection, connection = getCollection()
-    projects = collection.find()
-    connection.close()
-    return projects
+    return collection.find()
 
+@closeConnection
 def createComic(value):
-    collection, connection = getCollection()
     collection.insert_one(value)
-    connection.close()
 
+@closeConnection
 def updateComic(id, value):
-    collection, connection = getCollection()
     collection.update({'id': int(id)}, value)
-    connection.close()
 
+@closeConnection
 def deleteComic(value):
-    collection, connection = getCollection()
     collection.delete_one(value)
-    connection.close()
 
+@closeConnection
 def deleteAllComics():
-    collection, connection = getCollection()
     collection.delete_many({})
-    connection.close()
 

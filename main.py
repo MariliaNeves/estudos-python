@@ -27,10 +27,8 @@ def buscar():
     lista = DB.getAllComics()
     listaRetorno = []
     for comic in lista:
-        print(comic)
         listaRetorno.append(comic)
     return str(listaRetorno)
-
 
 @app.route('/pesquisar', methods=['GET',])
 def pesquisar():
@@ -39,7 +37,6 @@ def pesquisar():
     for item in comic:
         return dumps(item)
     return "Não encontrado!"
-
 
 @app.route('/deletar', methods=['DELETE',])
 def excluir():
