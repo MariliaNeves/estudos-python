@@ -14,8 +14,11 @@ def get_data(value):
 def credentials(funcao):
     def wrapper(*args, **kwargs):
         var = funcao(*args, **kwargs)
-        value = requests.get(var.__add__(CREDENTIALS))
-        return get_data(value)
+        response = requests.get(var.__add__(CREDENTIALS))
+        list = []
+        if response.status_code != 404:
+            list = get_data(response)
+        return list
     return wrapper
 
 @credentials
@@ -24,4 +27,4 @@ def get_comics():
 
 @credentials
 def get_values_endpoint(endpoint, id_comic):
-    return URL_API.__add__(endpoint +"/"+ id_comic)
+    return URL_API.__add__(endpoint +'/'+str(id_comic))

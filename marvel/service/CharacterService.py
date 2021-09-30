@@ -1,33 +1,33 @@
-from marvel.service import closeConnection, collection_characters
+from marvel.service import close_connection, collection_characters
 
-@closeConnection
+@close_connection
 def insert_character(character):
     collection_characters.insert_one(character)
 
-@closeConnection
+@close_connection
 def get_character(value):
     return collection_characters.find(value)
 
-@closeConnection
+@close_connection
 def insert_all_characters(characters):
     collection_characters.insert_many(characters)
 
-@closeConnection
+@close_connection
 def get_all_characters():
     return collection_characters.find()
 
-@closeConnection
+@close_connection
 def create_character(value):
     collection_characters.insert_one(value)
 
-@closeConnection
+@close_connection
 def update_character(id, value):
     collection_characters.update({'id': int(id)}, value)
 
-@closeConnection
+@close_connection
 def delete_character(value):
     collection_characters.delete_one(value)
 
-@closeConnection
+@close_connection
 def delete_all_characters():
     collection_characters.delete_many({})
