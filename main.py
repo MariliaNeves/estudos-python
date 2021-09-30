@@ -6,6 +6,11 @@ from marvel.util.RecriarBase import recriar
 
 app = Flask(__name__)
 
+@app.route('/restaurarBase', methods=['GET',])
+def recriarBase():
+    recriar()
+    return "Base restaurada."
+
 ### COMIC
 @app.route('/comic/criar', methods=['POST',])
 def criar_comic():
@@ -25,7 +30,6 @@ def buscar_comic():
     lista = ComicService.get_all_comics()
     listaRetorno = []
     for comic in lista:
-        print(comic)
         listaRetorno.append(comic)
     return str(listaRetorno)
 
@@ -63,7 +67,6 @@ def buscar_serie():
     lista = SerieService.get_all_series()
     listaRetorno = []
     for serie in lista:
-        print(serie)
         listaRetorno.append(serie)
     return str(listaRetorno)
 
@@ -101,7 +104,6 @@ def buscar_creator():
     lista = CreatorService.get_all_creators()
     listaRetorno = []
     for creator in lista:
-        print(creator)
         listaRetorno.append(creator)
     return str(listaRetorno)
 
@@ -139,7 +141,6 @@ def buscar_character():
     lista = CharacterService.get_all_characters()
     listaRetorno = []
     for character in lista:
-        print(character)
         listaRetorno.append(character)
     return str(listaRetorno)
 
@@ -178,7 +179,6 @@ def buscar_storie():
     lista = StorieService.get_all_stories()
     listaRetorno = []
     for storie in lista:
-        print(storie)
         listaRetorno.append(storie)
     return str(listaRetorno)
 
@@ -195,11 +195,5 @@ def excluir_storie():
     value = request.json
     StorieService.delete_storie(value)
     return "Excluído com sucesso."
-
-@app.route('/storie/restaurarBase', methods=['GET',])
-def recriarBase():
-    recriar()
-    return "Base restaurada."
-
 
 app.run(debug=True)
