@@ -99,7 +99,7 @@ def alterar_creator():
     CreatorService.update_creator(id, value)
     return "Alterado com sucesso."
 
-@app.route('/buscar', methods=['GET',])
+@app.route('/creator/buscar', methods=['GET',])
 def buscar_creator():
     lista = CreatorService.get_all_creators()
     listaRetorno = []
@@ -136,7 +136,7 @@ def alterar_character():
     CharacterService.update_character(id, value)
     return "Alterado com sucesso."
 
-@app.route('/buscar', methods=['GET',])
+@app.route('/character/buscar', methods=['GET',])
 def buscar_character():
     lista = CharacterService.get_all_characters()
     listaRetorno = []
@@ -174,7 +174,7 @@ def alterar_storie():
     StorieService.update_storie(id, value)
     return "Alterado com sucesso."
 
-@app.route('/buscar', methods=['GET',])
+@app.route('/storie/buscar', methods=['GET',])
 def buscar_storie():
     lista = StorieService.get_all_stories()
     listaRetorno = []
