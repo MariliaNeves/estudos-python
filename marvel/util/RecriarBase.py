@@ -12,25 +12,26 @@ def recriar_collection_Comic():
 def recriar_collection_Serie(id_comic):
     SerieService.delete_all_series()
     series = get_values_endpoint(endpoint.SERIES.value, id_comic)
-    for value in series:
+    if series:
         SerieService.insert_all_series(series)
 
 def recriar_collection_Creator(id_comic):
     CreatorService.delete_all_creators()
     creators = get_values_endpoint(endpoint.CREATORS.value, id_comic)
-    for value in creators:
+    print(f"creators {creators}")
+    if creators:
         CreatorService.insert_all_creators(creators)
 
 def recriar_collection_Character(id_comic):
     CharacterService.delete_all_characters()
     characters = get_values_endpoint(endpoint.CHARACTERS.value, id_comic)
-    for value in characters:
+    if characters:
         CharacterService.insert_all_characters(characters)
 
 def recriar_collection_Storie(id_comic):
     StorieService.delete_all_stories()
     stories = get_values_endpoint(endpoint.SERIES.value, id_comic)
-    for value in stories:
+    if stories:
         StorieService.insert_all_stories(stories)
 
 def recriar():
@@ -38,7 +39,7 @@ def recriar():
     lista = ComicService.get_all_comics()
     for comic in lista:
         id_comic = comic['id']
-        recriar_collection_Serie(id_comic)
+        #recriar_collection_Serie(id_comic)
         recriar_collection_Creator(id_comic)
-        recriar_collection_Character(id_comic)
-        recriar_collection_Storie(id_comic)
+        #recriar_collection_Character(id_comic)
+        #recriar_collection_Storie(id_comic)
