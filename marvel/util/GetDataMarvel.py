@@ -26,5 +26,9 @@ def get_comics():
     return URL_API.__add__(endpoint.COMICS.value)
 
 @credentials
+def get_storie(value):
+    return value
+
+@credentials
 def get_values_endpoint(endpoint, id_comic):
-    return URL_API.__add__(endpoint +'/'+str(id_comic))
+    return URL_API.__add__(Endpoint.EndpointMarvel.COMICS.value+'/'+str(id_comic)+'/'+endpoint)

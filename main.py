@@ -30,6 +30,7 @@ def buscar_comic():
     lista = ComicService.get_all_comics()
     listaRetorno = []
     for comic in lista:
+        print(f"comic {comic}")
         listaRetorno.append(comic)
     return str(listaRetorno)
 
@@ -67,6 +68,7 @@ def buscar_serie():
     lista = SerieService.get_all_series()
     listaRetorno = []
     for serie in lista:
+        print(f"serie {serie}")
         listaRetorno.append(serie)
     return str(listaRetorno)
 
@@ -104,6 +106,7 @@ def buscar_creator():
     lista = CreatorService.get_all_creators()
     listaRetorno = []
     for creator in lista:
+        print(f"creator {creator}")
         listaRetorno.append(creator)
     return str(listaRetorno)
 
@@ -141,6 +144,7 @@ def buscar_character():
     lista = CharacterService.get_all_characters()
     listaRetorno = []
     for character in lista:
+        print(f"character {character}")
         listaRetorno.append(character)
     return str(listaRetorno)
 
@@ -179,6 +183,7 @@ def buscar_storie():
     lista = StorieService.get_all_stories()
     listaRetorno = []
     for storie in lista:
+        print(f"storie {storie}")
         listaRetorno.append(storie)
     return str(listaRetorno)
 
