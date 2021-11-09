@@ -5,7 +5,7 @@ def insert_storie(storie):
     collection_stories.insert_one(storie)
 
 @close_connection
-def get_storie(value):
+def get_serie(value):
     return collection_stories.find(value)
 
 @close_connection

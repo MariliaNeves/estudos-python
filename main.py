@@ -1,6 +1,7 @@
 from bson.json_util import dumps
 from flask import Flask, request
-
+from pylint_af import PyLinter
+import os
 from marvel.service import ComicService, SerieService, CreatorService, CharacterService, StorieService
 from marvel.util.RecriarBase import recriar
 
@@ -190,7 +191,7 @@ def buscar_storie():
 @app.route('/storie/pesquisar', methods=['GET',])
 def pesquisar_storie():
     value = request.json
-    storie = StorieService.get_storie(value)
+    storie = StorieService.get_serie(value)
     for item in storie:
         return dumps(item)
     return "Não encontrado!"
@@ -200,5 +201,10 @@ def excluir_storie():
     value = request.json
     StorieService.delete_storie(value)
     return "Excluído com sucesso."
+
+@app.route('/pylint', methods=['GET',])
+def run_pylint():
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    PyLinter(dir_path).check()
 
 app.run(debug=True)
