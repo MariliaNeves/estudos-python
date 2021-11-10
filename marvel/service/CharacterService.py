@@ -26,10 +26,6 @@ class CharacterService:
         return self.collection.find()
 
     @close_connection
-    def create_character(self, value):
-        self.collection.insert_one(value)
-
-    @close_connection
     def update_character(self, id, value):
         self.collection.update({'id': int(id)}, value)
 

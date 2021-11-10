@@ -26,10 +26,6 @@ class ComicService:
         return self.collection.find()
 
     @close_connection
-    def create_comic(self, value):
-        self.collection.insert_one(value)
-
-    @close_connection
     def update_comic(self, id, value):
         self.collection.update({'id': int(id)}, value)
 

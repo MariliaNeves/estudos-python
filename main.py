@@ -21,7 +21,7 @@ def recriarBase():
 @app.route('/comic/criar', methods=['POST', ])
 def criar_comic():
     value = request.json
-    service_comic.create_comic(value)
+    service_comic.insert_comic(value)
     return "Criado com sucesso."
 
 
@@ -150,7 +150,7 @@ def excluir_creator():
 @app.route('/character/criar', methods=['POST', ])
 def criar_character():
     value = request.json
-    service_character.create_character(value)
+    service_character.insert_character(value)
     return "Criado com sucesso."
 
 
