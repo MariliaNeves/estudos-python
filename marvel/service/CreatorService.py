@@ -7,7 +7,7 @@ endpoint = Endpoint.EndpointMarvel
 class CreatorService:
 
     def __init__(self, connection):
-        self.collection = connection[endpoint.CHARACTERS.value]
+        self.collection = connection[endpoint.CREATORS.value]
 
     @close_connection
     def insert_creator(self, creator):
@@ -26,8 +26,8 @@ class CreatorService:
         return self.collection.find()
 
     @close_connection
-    def update_creator(self, id, value):
-        self.collection.update({'id': int(id)}, value)
+    def update_creator(self, value):
+        self.collection.update({'id': value['id']}, value)
 
     @close_connection
     def delete_creator(self, id):

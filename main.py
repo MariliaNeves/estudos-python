@@ -110,21 +110,20 @@ def excluir_serie():
 @app.route('/creator/criar', methods=['POST', ])
 def criar_creator():
     value = request.json
-    CreatorService.insert_creator(value)
+    service_creator.insert_creator(value)
     return "Criado com sucesso."
 
 
 @app.route('/creator/alterar', methods=['PUT', ])
 def alterar_creator():
     value = request.json
-    id = request.args['id']
-    CreatorService.update_creator(id, value)
+    service_creator.update_creator(value)
     return "Alterado com sucesso."
 
 
 @app.route('/creator/buscar', methods=['GET', ])
 def buscar_creator():
-    lista = CreatorService.get_all_creators()
+    lista = service_creator.get_all_creators()
     listaRetorno = []
     for creator in lista:
         print(f"creator {creator}")
@@ -135,7 +134,7 @@ def buscar_creator():
 @app.route('/creator/pesquisar', methods=['GET', ])
 def pesquisar_creator():
     value = request.json
-    creator = CreatorService.get_creator(value)
+    creator = service_creator.get_creator(value)
     for item in creator:
         return dumps(item)
     return "Não encontrado!"
@@ -143,8 +142,8 @@ def pesquisar_creator():
 
 @app.route('/creator/deletar', methods=['DELETE', ])
 def excluir_creator():
-    value = request.json
-    CreatorService.delete_creator(value)
+    id = request.args['id']
+    service_creator.delete_creator(id)
     return "Excluído com sucesso."
 
 
