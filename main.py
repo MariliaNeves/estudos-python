@@ -2,13 +2,14 @@ from bson.json_util import dumps
 from flask import Flask, request
 from pylint_af import PyLinter
 import os
-from marvel.service import ComicService, SerieService, CreatorService, StorieService, connection
+from marvel.service import SerieService, CreatorService, StorieService, connection
 from marvel.service.CharacterService import CharacterService
+from marvel.service.ComicService import ComicService
 from marvel.util.RecriarBase import recriar
 
 app = Flask(__name__)
 service_character = CharacterService(connection)
-
+service_comic = ComicService(connection)
 
 @app.route('/restaurarBase', methods=['GET', ])
 def recriarBase():
@@ -20,7 +21,7 @@ def recriarBase():
 @app.route('/comic/criar', methods=['POST', ])
 def criar_comic():
     value = request.json
-    ComicService.create_comic(value)
+    service_comic.create_comic(value)
     return "Criado com sucesso."
 
 
@@ -28,13 +29,13 @@ def criar_comic():
 def alterar_comic():
     value = request.json
     id = request.args['id']
-    ComicService.update_comic(id, value)
+    service_comic.update_comic(id, value)
     return "Alterado com sucesso."
 
 
 @app.route('/comic/buscar', methods=['GET', ])
 def buscar_comic():
-    lista = ComicService.get_all_comics()
+    lista = service_comic.get_all_comics()
     listaRetorno = []
     for comic in lista:
         print(f"comic {comic}")
@@ -45,7 +46,7 @@ def buscar_comic():
 @app.route('/comic/pesquisar', methods=['GET', ])
 def pesquisar_comic():
     value = request.json
-    comic = ComicService.get_comic(value)
+    comic = service_comic.get_comic(value)
     for item in comic:
         return dumps(item)
     return "Não encontrado!"
@@ -53,8 +54,8 @@ def pesquisar_comic():
 
 @app.route('/comic/deletar', methods=['DELETE', ])
 def excluir_comic():
-    value = request.json
-    ComicService.delete_comic(value)
+    id = request.args['id']
+    service_comic.delete_comic(id)
     return "Excluído com sucesso."
 
 

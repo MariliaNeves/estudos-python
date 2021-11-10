@@ -1,33 +1,42 @@
-from marvel.service import close_connection, collection_comics
+from marvel.service import close_connection
+from marvel.entity import Endpoint
 
-@close_connection
-def insert_comic(comic):
-    collection_comics.insert_one(comic)
+endpoint = Endpoint.EndpointMarvel
 
-@close_connection
-def get_comic(value):
-    return collection_comics.find(value)
 
-@close_connection
-def insert_all_comics(comics):
-    collection_comics.insert_many(comics)
+class ComicService:
 
-@close_connection
-def get_all_comics():
-    return collection_comics.find()
+    def __init__(self, connection):
+        self.collection = connection[endpoint.COMICS.value]
 
-@close_connection
-def create_comic(value):
-    collection_comics.insert_one(value)
+    @close_connection
+    def insert_comic(self, comic):
+        self.collection.insert_one(comic)
 
-@close_connection
-def update_comic(id, value):
-    collection_comics.update({'id': int(id)}, value)
+    @close_connection
+    def get_comic(self, value):
+        return self.collection.find(value)
 
-@close_connection
-def delete_comic(value):
-    collection_comics.delete_one(value)
+    @close_connection
+    def insert_all_comics(self, comics):
+        self.collection.insert_many(comics)
 
-@close_connection
-def delete_all_comics():
-    collection_comics.delete_many({})
+    @close_connection
+    def get_all_comics(self):
+        return self.collection.find()
+
+    @close_connection
+    def create_comic(self, value):
+        self.collection.insert_one(value)
+
+    @close_connection
+    def update_comic(self, id, value):
+        self.collection.update({'id': int(id)}, value)
+
+    @close_connection
+    def delete_comic(self, id):
+        self.collection.delete_one({'id': int(id)})
+
+    @close_connection
+    def delete_all_comics(self):
+        self.collection.delete_many({})
