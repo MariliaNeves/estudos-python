@@ -1,33 +1,38 @@
-from marvel.service import close_connection, collection_series
+from marvel.service import close_connection
+from marvel.entity import Endpoint
 
-@close_connection
-def insert_serie(serie):
-    collection_series.insert_one(serie)
+endpoint = Endpoint.EndpointMarvel
 
-@close_connection
-def get_serie(value):
-    return collection_series.find(value)
 
-@close_connection
-def insert_all_series(series):
-    collection_series.insert_many(series)
+class SerieService:
 
-@close_connection
-def get_all_series():
-    return collection_series.find()
+    def __init__(self, connection):
+        self.collection = connection[endpoint.SERIES.value]
 
-@close_connection
-def create_serie(value):
-    collection_series.insert_one(value)
+    @close_connection
+    def insert_serie(self, serie):
+        self.collection.insert_one(serie)
 
-@close_connection
-def update_serie(id, value):
-    collection_series.update({'id': int(id)}, value)
+    @close_connection
+    def get_serie(self, value):
+        return self.collection.find(value)
 
-@close_connection
-def delete_serie(value):
-    collection_series.delete_one(value)
+    @close_connection
+    def insert_all_series(self, series):
+        self.collection.insert_many(series)
 
-@close_connection
-def delete_all_series():
-    collection_series.delete_many({})
+    @close_connection
+    def get_all_series(self):
+        return self.collection.find()
+
+    @close_connection
+    def update_serie(self, value):
+        self.collection.update({'id': value['id']}, value)
+
+    @close_connection
+    def delete_serie(self, id):
+        self.collection.delete_one({'id': int(id)})
+
+    @close_connection
+    def delete_all_series(self):
+        self.collection.delete_many({})

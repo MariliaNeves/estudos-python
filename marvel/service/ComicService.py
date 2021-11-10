@@ -26,8 +26,8 @@ class ComicService:
         return self.collection.find()
 
     @close_connection
-    def update_comic(self, id, value):
-        self.collection.update({'id': int(id)}, value)
+    def update_comic(self, value):
+        self.collection.update({'id': value['id']}, value)
 
     @close_connection
     def delete_comic(self, id):

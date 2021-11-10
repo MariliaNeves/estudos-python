@@ -2,10 +2,12 @@ from bson.json_util import dumps
 from flask import Flask, request
 from pylint_af import PyLinter
 import os
-from marvel.service import SerieService, StorieService, connection
+from marvel.service import connection
 from marvel.service.CharacterService import CharacterService
 from marvel.service.ComicService import ComicService
 from marvel.service.CreatorService import CreatorService
+from marvel.service.SerieService import SerieService
+from marvel.service.StorieService import StorieService
 from marvel.util.RecriarBase import recriar
 
 
@@ -13,6 +15,8 @@ app = Flask(__name__)
 service_character = CharacterService(connection)
 service_comic = ComicService(connection)
 service_creator = CreatorService(connection)
+service_serie = SerieService(connection)
+service_storie = StorieService(connection)
 
 @app.route('/restaurarBase', methods=['GET', ])
 def recriarBase():
@@ -31,8 +35,7 @@ def criar_comic():
 @app.route('/comic/alterar', methods=['PUT', ])
 def alterar_comic():
     value = request.json
-    id = request.args['id']
-    service_comic.update_comic(id, value)
+    service_comic.update_comic(value)
     return "Alterado com sucesso."
 
 
@@ -67,21 +70,20 @@ def excluir_comic():
 @app.route('/serie/criar', methods=['POST', ])
 def criar_serie():
     value = request.json
-    SerieService.create_serie(value)
+    service_serie.insert_serie(value)
     return "Criado com sucesso."
 
 
 @app.route('/serie/alterar', methods=['PUT', ])
 def alterar_serie():
     value = request.json
-    id = request.args['id']
-    SerieService.update_serie(id, value)
+    service_serie.update_serie(value)
     return "Alterado com sucesso."
 
 
 @app.route('/serie/buscar', methods=['GET', ])
 def buscar_serie():
-    lista = SerieService.get_all_series()
+    lista = service_serie.get_all_series()
     listaRetorno = []
     for serie in lista:
         print(f"serie {serie}")
@@ -92,7 +94,7 @@ def buscar_serie():
 @app.route('/serie/pesquisar', methods=['GET', ])
 def pesquisar_serie():
     value = request.json
-    serie = SerieService.get_serie(value)
+    serie = service_serie.get_serie(value)
     for item in serie:
         return dumps(item)
     return "Não encontrado!"
@@ -100,8 +102,8 @@ def pesquisar_serie():
 
 @app.route('/serie/deletar', methods=['DELETE', ])
 def excluir_serie():
-    value = request.json
-    SerieService.delete_serie(value)
+    id = request.args['id']
+    service_serie.delete_serie(id)
     return "Excluído com sucesso."
 
 
@@ -195,21 +197,20 @@ def excluir_character():
 @app.route('/storie/criar', methods=['POST', ])
 def criar_storie():
     value = request.json
-    StorieService.create_storie(value)
+    service_storie.insert_storie(value)
     return "Criado com sucesso."
 
 
 @app.route('/storie/alterar', methods=['PUT', ])
 def alterar_storie():
     value = request.json
-    id = request.args['id']
-    StorieService.update_storie(id, value)
+    service_storie.update_storie(value)
     return "Alterado com sucesso."
 
 
 @app.route('/storie/buscar', methods=['GET', ])
 def buscar_storie():
-    lista = StorieService.get_all_stories()
+    lista = service_storie.get_all_stories()
     listaRetorno = []
     for storie in lista:
         print(f"storie {storie}")
@@ -220,7 +221,7 @@ def buscar_storie():
 @app.route('/storie/pesquisar', methods=['GET', ])
 def pesquisar_storie():
     value = request.json
-    storie = StorieService.get_serie(value)
+    storie = service_storie.get_serie(value)
     for item in storie:
         return dumps(item)
     return "Não encontrado!"
@@ -228,8 +229,8 @@ def pesquisar_storie():
 
 @app.route('/storie/deletar', methods=['DELETE', ])
 def excluir_storie():
-    value = request.json
-    StorieService.delete_storie(value)
+    id = request.args['id']
+    service_storie.delete_storie(id)
     return "Excluído com sucesso."
 
 
