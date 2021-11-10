@@ -161,8 +161,7 @@ def criar_character():
 @app.route('/character/alterar', methods=['PUT', ])
 def alterar_character():
     value = request.json
-    id = request.args['id']
-    service_character.update_character(id, value)
+    service_character.update_character(value)
     return "Alterado com sucesso."
 
 
@@ -221,7 +220,7 @@ def buscar_storie():
 @app.route('/storie/pesquisar', methods=['GET', ])
 def pesquisar_storie():
     value = request.json
-    storie = service_storie.get_serie(value)
+    storie = service_storie.get_storie(value)
     for item in storie:
         return dumps(item)
     return "Não encontrado!"

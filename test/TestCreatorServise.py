@@ -55,7 +55,7 @@ def test_update_creator(service):
     update_firstName = data['firstName'].__add__("ALTERADO")
     value = collection.find(data)[0]
     value['firstName'] = update_firstName
-    service.update_creator(value['id'], value)
+    service.update_creator(value)
     changed_value = collection.find(value)[0]
     assert update_firstName == changed_value['firstName']
 

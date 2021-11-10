@@ -14,7 +14,7 @@ class StorieService:
         self.collection.insert_one(storie)
 
     @close_connection
-    def get_serie(self, value):
+    def get_storie(self, value):
         return self.collection.find(value)
 
     @close_connection

@@ -26,8 +26,8 @@ class CharacterService:
         return self.collection.find()
 
     @close_connection
-    def update_character(self, id, value):
-        self.collection.update({'id': int(id)}, value)
+    def update_character(self, value):
+        self.collection.update({'id': value['id']}, value)
 
     @close_connection
     def delete_character(self, id):

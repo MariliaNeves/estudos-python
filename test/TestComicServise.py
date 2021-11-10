@@ -55,7 +55,7 @@ def test_update_comic(service):
     update_title = data['title'].__add__("ALTERADO")
     value = collection.find(data)[0]
     value['title'] = update_title
-    service.update_comic(value['id'], value)
+    service.update_comic(value)
     changed_value = collection.find(value)[0]
     assert update_title == changed_value['title']
 
