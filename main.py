@@ -2,14 +2,17 @@ from bson.json_util import dumps
 from flask import Flask, request
 from pylint_af import PyLinter
 import os
-from marvel.service import SerieService, CreatorService, StorieService, connection
+from marvel.service import SerieService, StorieService, connection
 from marvel.service.CharacterService import CharacterService
 from marvel.service.ComicService import ComicService
+from marvel.service.CreatorService import CreatorService
 from marvel.util.RecriarBase import recriar
+
 
 app = Flask(__name__)
 service_character = CharacterService(connection)
 service_comic = ComicService(connection)
+service_creator = CreatorService(connection)
 
 @app.route('/restaurarBase', methods=['GET', ])
 def recriarBase():
@@ -107,7 +110,7 @@ def excluir_serie():
 @app.route('/creator/criar', methods=['POST', ])
 def criar_creator():
     value = request.json
-    CreatorService.create_creator(value)
+    CreatorService.insert_creator(value)
     return "Criado com sucesso."
 
 
